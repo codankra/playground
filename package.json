@@ -1,0 +1,22 @@
+{
+  "name": "playground",
+  "version": "1.0.0",
+  "description": "CaeserCipher playground built on cool tech",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codankra/playground.git"
+  },
+  "author": "Daniel Kramer",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/codankra/playground/issues"
+  },
+  "homepage": "https://github.com/codankra/playground#readme",
+  "devDependencies": {
+    "jest": "^27.0.5"
+  }
+}
