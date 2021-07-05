@@ -1,5 +1,3 @@
-
-
 // Generate list of lowercase characters in the English alphabet
 const alphabet = [...Array(26).keys()].map((i) => String.fromCharCode(i + 97));
 
@@ -9,9 +7,8 @@ const getShiftedChar = (char, shiftSize) => {
       (alphabet.indexOf(char) + shiftSize) % alphabet.length;
     if (shiftedCharIndex < 0) shiftedCharIndex += alphabet.length;
     return alphabet[shiftedCharIndex];
-  } else {
-    return char;
   }
+  return char;
 };
 
 const rotateText = (text, shiftSize) => {
@@ -19,18 +16,16 @@ const rotateText = (text, shiftSize) => {
 };
 
 const rotateTextThroughAlphabet = (text) => {
-  let rotatedTextMap = {};
-  for (let i = 0; i < 26; i++) {
+  const rotatedTextMap = {};
+  for (let i = 0; i < 26; i += 1) {
     rotatedTextMap[i] = rotateText(text, i);
   }
   return rotatedTextMap;
 };
 
-
-
 module.exports = {
   getShiftedChar,
   rotateText,
   rotateTextThroughAlphabet,
-  alphabet
-}
+  alphabet,
+};
