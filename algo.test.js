@@ -23,8 +23,9 @@ describe("text rotation", () => {
     expect(rotateText("hello", 26)).toBe("hello");
   });
 
-  test('rotate "z" through alphabet generates alphabet', () => {
-    const abc = { ...alphabet };
-    expect(rotateTextThroughAlphabet("a")).toEqual(abc);
+  test('rotate "a" through alphabet generates alphabet', () => {
+    expect(Array.from(rotateTextThroughAlphabet("a").values())).toEqual(
+      alphabet
+    );
   });
 });

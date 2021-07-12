@@ -1,4 +1,5 @@
 // Generate list of lowercase characters in the English alphabet
+/** @type {string[]} */
 const alphabet = [...Array(26).keys()].map((i) => String.fromCharCode(i + 97));
 
 /**
@@ -34,7 +35,7 @@ const rotateText = (text, shiftSize) => {
  */
 const rotateTextThroughAlphabet = (text) => {
   /** @type {Map<number, string>} */
-  let rotatedTextMap;
+  const rotatedTextMap = new Map();
   for (let i = 0; i < 26; i += 1) {
     rotatedTextMap.set(i, rotateText(text, i));
   }
