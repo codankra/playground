@@ -1,5 +1,5 @@
 const readline = require("readline");
-const { rotateTextThroughAlphabet } = require("./algo");
+const { rotateTextThroughAlphabet } = require("../core/algo");
 
 const rl = readline.createInterface({
   input: process.stdin,

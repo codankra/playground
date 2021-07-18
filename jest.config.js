@@ -33,6 +33,9 @@ module.exports = {
   // Indicates which provider should be used to instrument code for coverage
   coverageProvider: "v8",
 
+  // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
+  testPathIgnorePatterns: ["/node_modules/", "/web/"],
+
   // A list of reporter names that Jest uses when writing coverage reports
   // coverageReporters: [
   //   "json",
@@ -149,11 +152,6 @@ module.exports = {
   // testMatch: [
   //   "**/__tests__/**/*.[jt]s?(x)",
   //   "**/?(*.)+(spec|test).[tj]s?(x)"
-  // ],
-
-  // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
-  // testPathIgnorePatterns: [
-  //   "/node_modules/"
   // ],
 
   // The regexp pattern or array of patterns that Jest uses to detect test files
