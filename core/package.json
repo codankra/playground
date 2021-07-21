@@ -1,6 +1,6 @@
 {
   "name": "@codankra/caeser",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "The core caeser cipher package.",
   "main": "algo.js",
   "scripts": {
@@ -9,6 +9,14 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/codankra/playground.git"
+  },
+  "keywords": [
+    "caeser",
+    "encryption",
+    "no-dependencies"
+  ],
+  "bugs": {
+    "url": "https://github.com/codankra/playground/issues?q=is%3Aopen+is%3Aissue+label%3A%22caeser+core%22"
   },
   "homepage": "https://github.com/codankra/playground/tree/core/core#readme",
   "author": "Daniel Kramer",

@@ -7,7 +7,7 @@ import {
   getShiftedChar,
   rotateText,
   rotateTextThroughAlphabet,
-} from "just-modulo";
+} from "@codankra/caeser";
 
 /* Shift alphabetic characters right or left. */
 getShiftedChar("a", 2); // "c"
