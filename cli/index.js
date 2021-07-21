@@ -1,5 +1,6 @@
+import { rotateTextThroughAlphabet } from "@codankra/caeser";
+
 const readline = require("readline");
-const { rotateTextThroughAlphabet } = require("../core/algo");
 
 const rl = readline.createInterface({
   input: process.stdin,
