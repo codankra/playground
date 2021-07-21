@@ -1,10 +1,9 @@
 name: Jest Annotations & Coverage
 on:
   push:
-    branches: [main]
+    branches: [main, cli, core, web]
   pull_request:
-    branches: [main]
-
+    branches: [main, cli, core, web]
 jobs:
   test:
     runs-on: ubuntu-latest
