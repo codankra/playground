@@ -23,8 +23,35 @@ const (
     hostname = "agk7y5afa28m.us-east-1.psdb.cloud"
     dbname   = "caeser"
 )
+
+
+
 func dsn(pw string) string {  
     return fmt.Sprintf("%s:%s@tcp(%s)/%s?tls=true", username, pw, hostname, dbname)
+}
+
+func dbConnection() (*sql.DB, error) {
+	pass :=  os.Getenv("dbpass")
+	db, err := sql.Open("mysql", dsn(pass))
+	if err != nil {
+		log.Printf("Error %s when opening DB", err)
+		return nil, err
+	}
+	//defer db.Close()
+
+	db.SetMaxOpenConns(20)
+	db.SetMaxIdleConns(20)
+	db.SetConnMaxLifetime(time.Minute * 5)
+
+	ctx, cancelfunc := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancelfunc()
+	err = db.PingContext(ctx)
+	if err != nil {
+		log.Printf("Errors %s pinging DB", err)
+		return nil, err
+	}
+	log.Printf("Connected to DB %s successfully\n", dbname)
+	return db, nil
 }
 
 func createQueryTable(db *sql.DB) error {
@@ -93,7 +120,7 @@ func insertQuery(db *sql.DB, q query) error {
 	return nil
 }
 
-func selectQuery(db *sql.DB, q query) error {  
+func selectQuery(db *sql.DB, q query) []int {  
 	res, err := db.Query("SELECT query_text, query_num FROM queries")
     defer res.Close()
 
@@ -101,6 +128,7 @@ func selectQuery(db *sql.DB, q query) error {
         log.Fatal(err)
     }
 	values_exist := false
+	var basic []int
     for res.Next() {
 		values_exist = true
 		var q query
@@ -111,37 +139,25 @@ func selectQuery(db *sql.DB, q query) error {
         }
 
         fmt.Printf("%v\n", q)
+		basic = append(basic, q.num)
     } 
 	if values_exist == false {
         fmt.Println("No query found")
 		
     }
-	return nil
+	return basic
 }
 
 
 
-func main() {  
-	pass :=  os.Getenv("dbpass")
-    db, err := sql.Open("mysql", dsn(pass))
-    if err != nil {
-        log.Printf("Error %s when opening DB\n", err)
-        return
-    }
-    defer db.Close()
-	db.SetMaxOpenConns(20)
-    db.SetMaxIdleConns(20)
-    db.SetConnMaxLifetime(time.Minute * 5)
-	ctx, cancelfunc := context.WithTimeout(context.Background(), 5*time.Second)
-	defer cancelfunc()
-	
-	err = db.PingContext(ctx)
-    if err != nil {
-        log.Printf("Errors pinging DB: %s", err)
-        return
-    }
-    log.Printf("Connected to DB %s successfully\n", dbname)
-
+func doitall() {  
+	db, err := dbConnection()
+	if err != nil {
+		log.Printf("Error %s when getting db connection", err)
+		return
+	}
+	defer db.Close()
+	log.Printf("Successfully connected to database")
 	err = createQueryTable(db)
 	if err != nil {
         log.Printf("Create query table failed with error %s", err)
@@ -163,13 +179,8 @@ func main() {
 		return
 	}
 
-	err = selectQuery(db, q)  
-	if err != nil {  
-		log.Printf("Select query %s failed with error %s", q.text, err)
-		return
-	} else {
-		log.Printf("Select query %s succeeded", q.text)
-	}
+	qnum := selectQuery(db, q)  
+	log.Printf("Select query %s succeeded with value %d", q.text, qnum)
 
 
 }
